@@ -6,6 +6,7 @@ import com.github.ssvitkov.KafkaServers
 import com.typesafe.config.ConfigFactory
 import wvlet.log.LogSupport
 import zio.cassandra.CassandraSession
+import com.github.ssvitkov.cassandra.CassandraRepository
 import zio.cassandra.service.CassandraSession
 import zio.clock.Clock
 import zio.kafka.consumer.Consumer

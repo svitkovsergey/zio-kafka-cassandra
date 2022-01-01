@@ -1,12 +1,12 @@
 package com.github.ssvitkov.app
 
 import com.github.ssvitkov.KafkaServers
+import com.github.ssvitkov.cassandra.CassandraRepository
 import com.github.ssvitkov.config.AppConfig
 import com.github.ssvitkov.kafka.KafkaStream
 import com.typesafe.config.Config
 import wvlet.log.LogSupport
 import zio.kafka.consumer.Consumer
-import zio.kafka.producer.Producer
 import zio.{Task, ZIO}
 
 object Application extends LogSupport {
@@ -15,7 +15,7 @@ object Application extends LogSupport {
       appConfig <- Task(AppConfig(config.getConfig("app")))
       repoLayer = CassandraRepository.live(config)
       kafkaLayer <- Application.kafkaLayer(config.getConfig("kafka"))
-      _ <- job(appConfig).provideCustomLayer(streamDiagnostics ++ kafkaLayer ++ repoLayer)
+      _ <- job(appConfig).provideCustomLayer(kafkaLayer ++ repoLayer)
     } yield ()
 
   def kafkaLayer(config: Config) =
@@ -25,16 +25,17 @@ object Application extends LogSupport {
         brokers.bootstrapServers,
         config.getObject("consumer.kafka-client")
       )
-      producerSettings <- KafkaServers.producerSettings(
-        brokers.bootstrapServers,
-        config.getObject("producer.kafka-client")
-      )
+      //uncomment if producer is required
+//      producerSettings <- KafkaServers.producerSettings(
+//        brokers.bootstrapServers,
+//        config.getObject("producer.kafka-client")
+//      )
       consumerLayer = Consumer
         .make(
           consumerSettings
         ).toLayer
-      producerLayer = Producer.make(producerSettings).toLayer
-    } yield consumerLayer ++ producerLayer
+      //producerLayer = Producer.make(producerSettings).toLayer
+    } yield consumerLayer
 
   def job(appConfig: AppConfig) =
     for {

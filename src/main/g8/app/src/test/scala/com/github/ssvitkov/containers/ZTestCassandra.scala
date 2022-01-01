@@ -3,7 +3,6 @@ package com.github.ssvitkov.containers
 import zio.{Has, RIO, Tag, TaskManaged, ZIO, ZLayer, ZManaged}
 import zio.test.TestFailure
 import com.dimafeng.testcontainers.CassandraContainer
-import com.dimafeng.testcontainers.GenericContainer.DockerImage
 import org.testcontainers.lifecycle.Startable
 import org.testcontainers.utility.DockerImageName
 

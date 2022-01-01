@@ -1,7 +1,6 @@
 package com.github.ssvitkov
 
 import com.typesafe.config.{Config, ConfigObject, ConfigValue}
-import kafka.cluster.Broker
 import zio.Task
 import zio.kafka.consumer.ConsumerSettings
 import zio.kafka.producer.ProducerSettings
@@ -23,7 +22,7 @@ object KafkaServers {
     KafkaServers(
       bootstrapServers = config
         .getString("bootstrap-servers")
-        .split("(,|\\s+|;)")
+        .split("(,|\\\s+|;)")
         .map(_.trim)
         .filter(_.nonEmpty)
         .toList

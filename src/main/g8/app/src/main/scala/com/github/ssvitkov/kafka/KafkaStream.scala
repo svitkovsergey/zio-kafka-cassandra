@@ -1,5 +1,6 @@
 package com.github.ssvitkov.kafka
 
+import com.github.ssvitkov.cassandra.CassandraRepository
 import com.github.ssvitkov.config.AppConfig
 import wvlet.log.LogSupport
 import zio.{Schedule, ZIO}
@@ -11,6 +12,7 @@ import zio.stream.ZStream
 
 import scala.util.Try
 
+@scala.annotation.nowarn //unused cassandra
 class KafkaStream(
   cassandraRepo: CassandraRepository,
   topics: Set[String]

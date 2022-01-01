@@ -14,7 +14,8 @@ object Main extends App with LogSupport {
     } yield ()
   }.foldCause(
     e => {
-      error(e.prettyPrint); ExitCode.failure
+      error(e.prettyPrint);
+      ExitCode.failure
     },
     _ => ExitCode.success
   )

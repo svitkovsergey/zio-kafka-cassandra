@@ -13,7 +13,7 @@ inThisBuild(
       "unchecked",
       "-explaintypes",
       "-Yrangepos",
-      "-Ywan-unused",
+      "-Ywarn-unused",
       "-Ymacro-annotations",
       "-language:higherKinds",
       "-language:implicitConversions",
